@@ -1,19 +1,24 @@
 import java.util.Scanner;
-public class CalculatorHWCombiner {
+public class LogInCalculator {
     public static void main(String[] args) {
         Scanner setCredentials = new Scanner(System.in);
         System.out.println("Type in your new username and password on separate lines.");
         String correctUsername = setCredentials.nextLine();
         String correctPassword = setCredentials.nextLine();
-        System.out.println("Log in to use calculator");
-        Scanner readCredentials = new Scanner(System.in);
-        String username = readCredentials.nextLine();
-        String password = readCredentials.nextLine();
-        if (username.equals(correctUsername) && password.equals(correctPassword)) {
-            System.out.println("Logged in, type in a number, then an operator, then another number all on different lines.");
-            System.out.println(doMath());
-        } else {
-            System.out.println("Incorrect Username or Password");
+        //this is here because i had my mom try to break my calculator, and she ended up being able to set a blank username/password, and i know i will forget to delete this
+        if (correctUsername.equals("") || correctPassword.equals("") || correctUsername.equals(" ") || correctPassword.equals(" ")) {
+            System.out.println("you're not allowed to do that mom");
+            } else {
+            System.out.println("Log in to use calculator");
+            Scanner readCredentials = new Scanner(System.in);
+            String username = readCredentials.nextLine();
+            String password = readCredentials.nextLine();
+            if (username.equals(correctUsername) && password.equals(correctPassword)) {
+                System.out.println("Logged in, type in a number, then an operator, then another number all on different lines.");
+                System.out.println(doMath());
+            } else {
+                System.out.println("Incorrect Username or Password");
+            }
         }
     }
     public static double readNumberOne() {
