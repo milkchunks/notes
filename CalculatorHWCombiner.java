@@ -54,6 +54,6 @@ public class LogInCalculator {
         } else if (operator.equals("^")) {
             return (Math.pow(numberOne, numberTwo));
         }
-        return (3);
+        return (3); //i had to have a final return statement, and i can't have it return a string saying "error" or something because the method is listed as returning a double, so i just had it return three because it shouldn't ever return three
     }
 }
