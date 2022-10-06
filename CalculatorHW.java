@@ -1,5 +1,6 @@
 import java.util.Scanner;
 public class CalculatorHW {
+    //this calculator is more user friendly and doesn't require logging in
     public static void main(String[] args) {
         System.out.println("Calculator");
         System.out.println("Input a number, operator, and another number all on different lines");
