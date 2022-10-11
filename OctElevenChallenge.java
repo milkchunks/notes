@@ -47,7 +47,7 @@ public class OctElevenChallenge {
                     break;
                 default:
                     System.out.println("Internal Error: Randomizer returned an integer not included in the switch statement");
-            }
+                    }
                 }
             }
         }
