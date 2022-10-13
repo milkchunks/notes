@@ -1,5 +1,6 @@
 public class Lists{
     public static void main(String[] args) {
+        //casting!!
         Integer i = 0;
         Double d = i.doubleValue();
         System.out.println(i + d);
