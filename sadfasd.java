@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class sadfasd {
+public class OctEighteenExercise {
     public static void main(String[] args) {
         playerOne();
     }
