@@ -4,20 +4,22 @@ import java.util.Collections;
 
 public class FractionCalculator2 {
     public static void main(String[] args) {
-        Float floatOne = (Float) readEquation().get(0);
+        Double doubleOne = (Double) readEquation().get(0);
         String operator = (String) readEquation().get(1);
-        Float floatTwo = (Float) readEquation().get(2);
-        System.out.println(floatOne);
+        Double doubleTwo = (Double) readEquation().get(2);
+        System.out.println(doubleOne);
         System.out.println(operator);
-        System.out.println(floatTwo);
-        if (operator == "+") {
+        System.out.println(doubleTwo);
+        if (operator.equals("+")) {
             System.out.println(addition());
-        } else if (operator == "-") {
+        } else if (operator.equals("-")) {
             System.out.println(subtraction());
-        } else if (operator == "*") {
+        } else if (operator.equals("*")) {
             System.out.println(multiplication());
-        } else if (operator == "/") {
+        } else if (operator.equals("/")) {
             System.out.println(division());
+        } else {
+            System.out.println("Error: invalid operator");
         }
     }
     public static ArrayList readEquation() {
@@ -27,24 +29,24 @@ public class FractionCalculator2 {
         equationParse.add(equation.split(""));
         return (equation);
     }
-    public static float addition() {
-        Float floatOne = (Float) readEquation().get(0);
-        Float floatTwo = (Float) readEquation().get(2);
-        return (floatOne + floatTwo);
+    public static double addition() {
+        Double doubleOne = (Double) readEquation().get(0);
+        Double doubleTwo = (Double) readEquation().get(2);
+        return (doubleOne + doubleTwo);
     }
     public static float subtraction() {
-        Float floatOne = (Float) readEquation().get(0);
-        Float floatTwo = (Float) readEquation().get(2);
-        return (floatOne - floatTwo);
+        Double doubleOne = (Double) readEquation().get(0);
+        Double doubleTwo = (Double) readEquation().get(2);
+        return (doubleOne - doubleTwo);
     }
     public static float multiplication() {
-        Float floatOne = (Float) readEquation().get(0);
-        Float floatTwo = (Float) readEquation().get(2);
-        return (floatOne * floatTwo);
+        Double doubleOne = (Double) readEquation().get(0);
+        Double doubleTwo = (Double) readEquation().get(2);
+        return (doubleOne * doubleTwo);
     }
     public static float division() {
-        Float floatOne = (Float) readEquation().get(0);
-        Float floatTwo = (Float) readEquation().get(2);
-        return (floatOne / floatTwo);
+        Double doubleOne = (Double) readEquation().get(0);
+        Double doubleTwo = (Double) readEquation().get(2);
+        return (doubleOne / doubleTwo);
     }
 }
