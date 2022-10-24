@@ -1,16 +1,17 @@
 import java.util.Scanner;
 
 public class FractionCalculator2 {
-    static String[] parsedEquation = readEquation();
     static String[] parsedMain = readEquation();
-    static String[] argumentOne = argumentOne();
-    static String[] argumentTwo = argumentTwo();
-    static Float argOneNum = Float.valueOf((argumentOne[0]));
-    static Float argOneDenom = Float.valueOf(argumentOne[1]);
-    static Float argTwoNum = Float.valueOf(argumentTwo[0]);
-    static Float argTwoDenom = Float.valueOf(argumentTwo[1]);
+    static Float argOneNum = Float.valueOf((argumentOne()[0]));
+    static Float argOneDenom = Float.valueOf(argumentOne()[1]);
+    static Float argTwoNum = Float.valueOf(argumentTwo()[0]);
+    static Float argTwoDenom = Float.valueOf(argumentTwo()[1]);
     public static void main(String[] args) {
-            String operator = String.valueOf(parsedEquation[1]);
+        System.out.println(readEquation());
+        System.out.println(argumentOne());
+        System.out.println(argumentTwo());
+        System.out.println("Input two numbers/fractions, separating all arguments with spaces (Example: 3 + 3");
+            String operator = String.valueOf(parsedMain[1]);
             if (!Float.isNaN(argOneNum) || !Float.isNaN(argOneDenom) || !Float.isNaN(argTwoNum) || !Float.isNaN(argTwoDenom)) {
                 if (operator.equals("+") || operator.equals("-") || operator.equals("*") || operator.equals("/")) {
                     if (operator.equals("+")) {
@@ -41,13 +42,9 @@ public class FractionCalculator2 {
         Scanner operatorReader = new Scanner(System.in);
         String equation = operatorReader.nextLine();
         String[] equation2 = equation.split(" ");
-        return (equation2);
+        return equation2;
     }
     public static Float addition() {
-        Float argOneNum = Float.valueOf(argumentOne[0]);
-        Float argOneDenom = Float.valueOf(argumentOne[1]);
-        Float argTwoNum = Float.valueOf(argumentTwo[0]);
-        Float argTwoDenom = Float.valueOf(argumentTwo[1]);
         Float argOneMultNum = argOneNum * argTwoDenom;
         Float argOneMultDenom = argOneDenom * argTwoDenom;
         Float argTwoMultNum = argTwoNum * argOneDenom;
@@ -56,10 +53,6 @@ public class FractionCalculator2 {
         return (numAddend / denomAddend);
     }
     public static Float subtraction() {
-        Float argOneNum = Float.valueOf(argumentOne[0]);
-        Float argOneDenom = Float.valueOf(argumentOne[1]);
-        Float argTwoNum = Float.valueOf(argumentTwo[0]);
-        Float argTwoDenom = Float.valueOf(argumentTwo[1]);
         Float argOneMultNum = argOneNum * argTwoDenom;
         Float argOneMultDenom = argOneDenom * argTwoDenom;
         Float argTwoMultNum = argTwoNum * argOneDenom;
@@ -69,23 +62,13 @@ public class FractionCalculator2 {
         return (numDiff / denomDiff);
     }
     public static Float multiplication() {
-        Float argOneNum = Float.valueOf(argumentOne[0]);
-        Float argOneDenom = Float.valueOf(argumentOne[1]);
-        Float argTwoNum = Float.valueOf(argumentTwo[0]);
-        Float argTwoDenom = Float.valueOf(argumentTwo[1]);
         Float multNum = argOneNum * argTwoNum;
         Float multDenom = argOneDenom * argTwoDenom;
         return (multNum / multDenom);
     }
     public static Float division() {
-        Float argOneNum = Float.valueOf(argumentOne[0]);
-        Float argOneDenom = Float.valueOf(argumentOne[1]);
-        Float argTwoNum = Float.valueOf(argumentTwo[0]);
-        Float argTwoDenom = Float.valueOf(argumentTwo[1]);
-        Float recipArgOneNum = argOneDenom;
-        Float recipArgOneDenom = argOneNum;
-        Float multNum = recipArgOneNum * argTwoNum;
-        Float multDenom = recipArgOneDenom * argTwoDenom;
+        Float multNum = argOneDenom * argTwoNum;
+        Float multDenom = argOneNum * argTwoDenom;
         return (multNum / multDenom);
     }
 }
