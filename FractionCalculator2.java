@@ -316,7 +316,7 @@ public class FractionCalculator2 {
             Float argTwoMultNum = (argTwoQuotient * argTwoDenom + argTwoNum) * argOneDenom; //positive
             String numDiffStringed = String.valueOf((int) (argOneMultNum + argTwoMultNum));
             String denomStringed = String.valueOf((int) (argOneMultDenom + 0));
-            return (Integer.parseInt(numDiffStringed) + "/" + denomStringed);
+            return (Integer.parseInt("-" + numDiffStringed) + "/" + denomStringed);
         }
         return ("0");
     }
