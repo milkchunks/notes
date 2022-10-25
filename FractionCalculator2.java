@@ -74,31 +74,30 @@ public class FractionCalculator2 {
                             System.out.println(additionQuotientFinal + " " + additionNumFinal2 + "/" + additionDenom2 + "if");
                         }
                     } else if (operator.equals("*")) {
-                        String[] parsedAddition = multiplication().split("/"); //0: numerator, 1: denominator
-                        Double additionNum = Double.valueOf(parsedAddition[0]);
-                        Double additionDenom = Double.valueOf(parsedAddition[1]);
-                        Double additionNumFinal = additionNum % additionDenom;
-                        Integer additionQuotientFinal = Integer.parseInt(String.valueOf(Math.round(additionNum / additionDenom)));
+                        String[] parsedDivision = multiplication().split("/"); //0: numerator, 1: denominator
+                        Integer divisionNum = Integer.parseInt(parsedDivision[0]);
+                        Integer divisionDenom = Integer.parseInt(parsedDivision[1]);
+                        Integer divisionNumFinal = divisionNum % divisionDenom;
+                        Integer divisionQuotientFinal = Integer.parseInt(String.valueOf(Math.round(divisionNum / divisionDenom)));
                         Integer gcf = 1;
                         int i = 1;
                         Integer j = 1;
-                        if (additionNumFinal < additionDenom) {
-                            Double jint = additionNumFinal;
+                        if (divisionNumFinal < divisionDenom) {
+                            j = divisionNumFinal;
                         } else {
-                            Double jint = additionDenom;
+                            j = divisionDenom;
                         }
                         for (i = 1; i <= j; i++) {
-                            if (additionNumFinal % i == 0 && additionDenom % i == 0) {
+                            if (divisionNumFinal % i == 0 && divisionDenom % i == 0) {
                                 gcf = i;
                             }
                         }
-                        Integer additionNumFinal2 = Math.toIntExact(Math.round(additionNumFinal / gcf));
-                        Integer additionDenom2 = Math.toIntExact(Math.round(additionDenom / gcf));
-                        if (additionDenom2 == 0 || additionNumFinal2 == 0) {
-                            System.out.println("0");
-                        }
-                        if (additionQuotientFinal > 0 || additionQuotientFinal < 0) {
-                            System.out.println(additionQuotientFinal + " " + additionNumFinal2 + "/" + additionDenom2);
+                        divisionNum = divisionNumFinal / gcf;
+                        divisionDenom = divisionDenom / gcf;
+                        if (divisionQuotientFinal > 0 || divisionQuotientFinal < 0) {
+                            System.out.println(divisionQuotientFinal + " " + divisionNum + "/" + divisionDenom);
+                        } else {
+                            System.out.println(divisionNum + "/" + divisionDenom);
                         }
                     } else if (operator.equals("/")) {
                         String[] parsedDivision = division().split("/"); //0: numerator, 1: denominator
@@ -124,6 +123,7 @@ public class FractionCalculator2 {
                                 gcf = i;
                             }
                         }
+                        System.out.println(gcf);
                         divisionNum = divisionNumFinal / gcf;
                         divisionDenom = divisionDenom / gcf;
                         if (divisionQuotientFinal > 0 || divisionQuotientFinal < 0) {
