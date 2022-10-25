@@ -1,4 +1,3 @@
-
 /*
 Online Java - IDE, Code Editor, Compiler
 
@@ -7,8 +6,7 @@ Online Java is a quick and easy tool that helps you to build, compile, test your
 import java.util.Scanner;
 import java.util.ArrayList;
 public class OnlineJavaTemp {
-    public static void main(String[] args) {
-        static ArrayList parsedMain = readEquation();
+    static ArrayList parsedMain = readEquation();
     static Float argOneQuotient = Float.parseFloat((String) parsedMain.get(0));
     static Float argOneNum =  Float.parseFloat((String) parsedMain.get(1));
     static Float argOneDenom = Float.parseFloat((String) parsedMain.get(2));
@@ -318,6 +316,7 @@ public class OnlineJavaTemp {
         }
         
     }
+    //same 'just add negative if the quotients signs aren't the same' principle for division
     public static String division() {
         Float improperMultArgOneDenom = null;
         Float divNum = null;
@@ -352,7 +351,5 @@ public class OnlineJavaTemp {
         String multNumStringed = String.valueOf((int) (divNum + 0));
         String multDenomStringed = String.valueOf((int) (divDenom + 0));
         return (multNumStringed + "/" + multDenomStringed);
-    }
-
     }
 }
