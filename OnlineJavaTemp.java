@@ -1,3 +1,4 @@
+
 /*
 Online Java - IDE, Code Editor, Compiler
 
@@ -5,15 +6,15 @@ Online Java is a quick and easy tool that helps you to build, compile, test your
 */
 import java.util.Scanner;
 import java.util.ArrayList;
-public class OnlineJavaTemp {
-    static ArrayList parsedMain = readEquation();
-    static Float argOneQuotient = Float.parseFloat((String) parsedMain.get(0));
-    static Float argOneNum =  Float.parseFloat((String) parsedMain.get(1));
-    static Float argOneDenom = Float.parseFloat((String) parsedMain.get(2));
-    static String operator = (String) parsedMain.get(3);
-    static Float argTwoQuotient = Float.parseFloat((String) parsedMain.get(4));
-    static Float argTwoNum = Float.parseFloat((String) parsedMain.get(5));
-    static Float argTwoDenom = Float.parseFloat((String) parsedMain.get(6));
+public class Main {
+        static ArrayList parsedMain = readEquation();
+        static Float argOneQuotient = Float.parseFloat((String) parsedMain.get(0));
+        static Float argOneNum =  Float.parseFloat((String) parsedMain.get(1));
+        static Float argOneDenom = Float.parseFloat((String) parsedMain.get(2));
+        static String operator = (String) parsedMain.get(3);
+        static Float argTwoQuotient = Float.parseFloat((String) parsedMain.get(4));
+        static Float argTwoNum = Float.parseFloat((String) parsedMain.get(5));
+        static Float argTwoDenom = Float.parseFloat((String) parsedMain.get(6));
     public static void main(String[] args) {
         //make an entirely different math system for negative quotients
         //simplify THEN turn it into a mixed number
@@ -26,12 +27,12 @@ public class OnlineJavaTemp {
                 if (operator.equals("+") || operator.equals("-") || operator.equals("*") || operator.equals("/")) {
                     if (operator.equals("+")) {
                         String[] parsedAddition = addition().split("/"); //0: numerator, 1: denominator
-                        If (Math.sign(parsedAddition[0].equals("1")) || Math.sign(parsedAddition[1].equals("1"))) {
+                        if (Math.sign(parsedAddition[0].equals("1")) || Math.sign(parsedAddition[1].equals("1"))) {
                             boolean fractionIsPositive = true;
                         } else if (Math.sign(parsedAddition[0]).equals("-1") || Math.sign(parsedAddition[1].equals("-1"))) {
                             boolean fractionIsPositive = false;
                         }
-                        If (fractionIsPositive)) {
+                        if (fractionIsPositive) {
                         Double additionNum = Double.valueOf(parsedAddition[0]);
                         Double additionDenom = Double.valueOf(parsedAddition[1]);
                         Double additionNumFinal = additionNum % additionDenom;
@@ -56,7 +57,7 @@ public class OnlineJavaTemp {
                         } else {
                             System.out.println(additionNumFinal2 + "/" + additionDenom2);
                         }
-                        } else if (fractionIsPositive == false;) {
+                        } else if (fractionIsPositive == false) {
                             Double additionNum = Double.valueOf(parsedAddition[0]);
                             Double additionDenom = Double.valueOf(parsedAddition[1]);
                             Double addtionNumFinal = additionNum % additionDenom; //this will return a positive number
@@ -159,7 +160,7 @@ public class OnlineJavaTemp {
         //maybe use if statements in all methods to check if the inputs are mixed numbers (if argOneQuotient == 0, etc.). (if equation3[0] || equation4[0] == 0, etc)
         System.out.println("Input two mixed fractions with an underscore separating the quotient and fraction (Example: 3_1/2 * 3_1/2)");
         System.out.println("If you are adding or multiplying a negative fraction and a positive fraction, input the negative fraction second (Example: 3_1/2 * -3_1/2");
-        System.out.println("If you input a regular fraction, input it with the quotient equalling 0 (Example: 3_1/2 + 0_1/2)")
+        System.out.println("If you input a regular fraction, input it with the quotient equalling 0 (Example: 3_1/2 + 0_1/2)");
         System.out.println("If you are adding or multiplying a mixed number and a regular fraction, input the regular fraction last (Example: 3_1/2 + 0_1/2)");
         Scanner operatorReader = new Scanner(System.in);
         String equation = operatorReader.nextLine();
@@ -233,7 +234,7 @@ public class OnlineJavaTemp {
                 if (Math.sign(argOneNum).equals("-1")) {
                     subtraction();
                     //if the numerator of a regular fraction is negative
-                } else { //else the numerator is positive and proceed normally
+                } else if (Math.sign(argOneNum).equals("1")) { //else the numerator is positive and proceed normally
                 //quotient is negative
                 Float negArgOneMultNum = argOneNum * argTwoDenom;
                 Float negArgOneMultDenom = argOneDenom * argTwoDenom;
@@ -278,6 +279,8 @@ public class OnlineJavaTemp {
             String negImpDenomStringed = String.valueOf((int) (negArgOneMultDenom + 0));
             return (Integer.parseInt("-" + negImpNumStringed) + "/" + negImpDenomStringed);
     }
+    }
+    }
     public static String subtraction() {
         Float argOneMultNum = argOneNum * argTwoDenom;
         Float argOneMultDenom = argOneDenom * argTwoDenom;
@@ -298,7 +301,7 @@ public class OnlineJavaTemp {
         Float multArgOneDenom = null;
         Float multArgTwoNum = null;
         Float multArgTwoDenom = null;
-        if (Math.sign(argOneQuotient).equals("1") && Math.sign(argTwoQuotient).equals("1"))) {
+        if ((Math.sign(argOneQuotient).equals(Math.sign(argTwoQuotient)))) {
             multArgOneNum = argOneNum * argTwoDenom;
             multArgOneDenom = argOneDenom * argTwoDenom;
             multArgTwoNum = argTwoNum * argOneDenom;
@@ -311,12 +314,12 @@ public class OnlineJavaTemp {
             String multDenomStringed = String.valueOf((int) (multDenom + 0));
             return (multNumStringed + "/" + multDenomStringed);
         } else {
-            multNum = argOneNum * argTwoNum;
-            multDenom = argOneDenom * argTwoDenom;
+            String multNumStringed = String.valueOf((int) (multNum + 0));
+            String multDenomStringed = String.valueOf((int) (multDenom + 0));
+            return (Integer.parseInt("-" + multNumStringed) + "/" + multDenomStringed);
         }
         
     }
-    //same 'just add negative if the quotients signs aren't the same' principle for division
     public static String division() {
         Float improperMultArgOneDenom = null;
         Float divNum = null;
