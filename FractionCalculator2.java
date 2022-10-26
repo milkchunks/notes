@@ -18,17 +18,8 @@ public class FractionCalculator2 {
         //ALSO SIMPLIFICATION METHOD
         //if numerator > denominator mixed number method
         //mod goes in numerator, regular division goes in quotient
-        if (!Float.isNaN(argOneNum) || !Float.isNaN(argOneDenom) || !Float.isNaN(argTwoNum) || !Float.isNaN(argTwoDenom) || !Float.isNaN(argOneQuotient) || !Float.isNaN(argTwoQuotient)) {
-            if (operator.equals("+") || operator.equals("-") || operator.equals("*") || operator.equals("/")) {
-                if (operator.equals("+")) {
-                    boolean fractionIsPositive = true;
-                    String[] parsedAddition = addition().split("/"); //0: numerator, 1: denominator
-                    if (Double.valueOf(parsedAddition[0]) > 0 || Double.valueOf(parsedAddition[1]) > 0) {
-                        fractionIsPositive = true;
-                    } else if (Double.valueOf(parsedAddition[0]) < 0 || Double.valueOf(parsedAddition[1]) < 0) {
-                        fractionIsPositive = false;
-                    }
-                    if (fractionIsPositive) {
+                    if (operator.equals("+")) {
+                        String[] parsedAddition = addition().split("/"); //0: numerator, 1: denominator
                         Double additionNum = Double.valueOf(parsedAddition[0]);
                         Double additionDenom = Double.valueOf(parsedAddition[1]);
                         Double additionNumFinal = additionNum % additionDenom;
@@ -36,7 +27,6 @@ public class FractionCalculator2 {
                         Integer gcf = 1;
                         int i = 1;
                         Double jint = null;
-                        Integer j = 1;
                         if (additionNumFinal < additionDenom) {
                             jint = Math.abs(additionNumFinal);
                         } else {
@@ -49,56 +39,26 @@ public class FractionCalculator2 {
                         }
                         Integer additionNumFinal2 = Math.toIntExact(Math.round(additionNumFinal / gcf));
                         Integer additionDenom2 = Math.toIntExact(Math.round(additionDenom / gcf));
-                        if (additionQuotientFinal > 0 || additionQuotientFinal < 0) {
-                            if (additionNumFinal2 == 0 || additionNumFinal2 == 0) { //if additionNumFinal2 == 0 it runs this
-                                System.out.println(additionQuotientFinal);
-                            } else if (additionNumFinal2 > 0 || additionNumFinal2 < 0 || additionDenom2 > 0 || additionDenom2 < 0){
-                                System.out.println(additionQuotientFinal + " " + additionNumFinal2 + "/" + additionDenom2);
-                            }
-                        } else {
-                            if (additionNumFinal2 == 0 || additionDenom2 == 0) {
-                                System.out.println("0");
-                            } else {
-                                System.out.println(additionNumFinal2 + "/" + additionDenom2);
-                            }
+                        if (additionQuotientFinal != 0 && (additionNumFinal2 == 0 || additionDenom2 == 0)) {
+                            System.out.println(additionQuotientFinal);
+                        } else if (additionNumFinal2 != 0 && additionDenom2 != 0 && additionQuotientFinal != 0) {
+                            System.out.println(additionQuotientFinal + " " + Math.abs(additionNumFinal2) + "/" + Math.abs(additionDenom2));
+                        } else if (additionQuotientFinal == 0 && (additionDenom2 != 0 && additionNumFinal2 != 0)) {
+                            System.out.println(additionNumFinal2 + "/" + Math.abs(additionDenom2));
+                        } else if (additionQuotientFinal == 0 && (additionDenom2 == 0 || additionNumFinal2 == 0)) {
+                            System.out.println(0);
                         }
-                    } else if (fractionIsPositive == false) {
-                        Double additionNum = Double.valueOf(parsedAddition[0]);
-                        Double additionDenom = Double.valueOf(parsedAddition[1]);
-                        Double additionNumFinal = additionNum % additionDenom;
-                        Integer additionQuotientFinal = (int)(additionNum / additionDenom);
-                        Integer gcf = 1;
-                        int i = 1;
-                        Double jint = null;
-                        if (additionNumFinal < additionDenom) {
-                            jint = Math.abs(additionNumFinal);
-                        } else {
-                            jint = Math.abs(additionDenom);
-                        }
-                        for (i = 1; i <= jint; i++) {
-                            if (additionNumFinal % i == 0 && additionDenom % i == 0) {
-                                gcf = i;
-                            }
-                        }
-                        Integer additionNumFinal2 = Math.toIntExact(Math.round(additionNumFinal / gcf));
-                        Integer additionDenom2 = Math.toIntExact(Math.round(additionDenom / gcf));
-                        if (additionQuotientFinal > 0 || additionQuotientFinal < 0) {
-                            System.out.println(additionQuotientFinal + " " + additionNumFinal2 + "/" + additionDenom2);
-                        } else {
-                            System.out.println(additionNumFinal2 + "/" + additionDenom2);
-                        }
-                    }
                 } else if (operator.equals("-")) {
                     String[] parsedAddition = subtraction().split("/"); //0: numerator, 1: denominator
                     Double additionNum = Double.valueOf(parsedAddition[0]);
                     Double additionDenom = Double.valueOf(parsedAddition[1]);
                     Double additionNumFinal = additionNum % additionDenom;
-                    Integer additionQuotientFinal = (int)(additionNum / additionDenom);
+                    Integer additionQuotientFinal = (int) (additionNum / additionDenom);
                     Integer gcf = 1;
                     int i = 1;
                     Double jint = null;
                     if (additionNumFinal < additionDenom) {
-                       jint = Math.abs(additionNumFinal);
+                        jint = Math.abs(additionNumFinal);
                     } else {
                         jint = Math.abs(additionDenom);
                     }
@@ -112,9 +72,9 @@ public class FractionCalculator2 {
                     //this section is broken
                     if (additionQuotientFinal != 0 && (additionDenom2 == 0 || additionNumFinal2 == 0)) {
                         System.out.println(additionQuotientFinal);
-                    } else if (additionDenom2 != 0 && additionNumFinal2 != 0 && additionQuotientFinal != 0) {
+                    } else if ((additionDenom2 != 0 && additionNumFinal2 != 0) && additionQuotientFinal != 0) {
                         System.out.println(additionQuotientFinal + " " + Math.abs(additionNumFinal2) + "/" + Math.abs(additionDenom2));
-                    } else if (additionQuotientFinal == 0 && (additionDenom2 == 0 && additionNumFinal2 == 0)) {
+                    } else if (additionQuotientFinal == 0 && (additionDenom2 == 0 || additionNumFinal2 == 0)) {
                         System.out.println("0");
                     } else if (additionQuotientFinal == 0 && (additionDenom2 != 0 && additionNumFinal2 != 0)) {
                         System.out.println(additionNumFinal2 + "/" + Math.abs(additionDenom2));
@@ -124,8 +84,7 @@ public class FractionCalculator2 {
                     Integer divisionNum = Integer.parseInt(parsedDivision[0]);
                     Integer divisionDenom = Integer.parseInt(parsedDivision[1]);
                     Integer divisionNumFinal = divisionNum % divisionDenom;
-                    Integer divisionQuotientFinal = (int)(divisionNum / divisionDenom);
-                    System.out.println(divisionQuotientFinal);
+                    Integer divisionQuotientFinal = (int) (divisionNum / divisionDenom);
                     Integer gcf = 1;
                     int i = 1;
                     Integer jint = null;
@@ -143,7 +102,7 @@ public class FractionCalculator2 {
                     divisionDenom = divisionDenom / gcf;
                     if (divisionQuotientFinal != 0 && (divisionDenom != 0 || divisionNum != 0)) {
                         System.out.println(divisionQuotientFinal + " " + Math.abs(divisionNum) + "/" + Math.abs(divisionDenom));
-                    } else if (divisionQuotientFinal == 0 && (divisionDenom != 0 || divisionNum != 0)){
+                    } else if (divisionQuotientFinal == 0 && (divisionDenom != 0 || divisionNum != 0)) {
                         System.out.println(divisionNum + "/" + Math.abs(divisionDenom));
                     } else if (divisionQuotientFinal == 0 && (divisionDenom == 0 || divisionNum == 0)) {
                         System.out.println("0");
@@ -174,7 +133,7 @@ public class FractionCalculator2 {
 
                     if (divisionQuotientFinal != 0 && (divisionDenom != 0 && divisionNum != 0)) {
                         System.out.println(divisionQuotientFinal + " " + Math.abs(divisionNum) + "/" + Math.abs(divisionDenom));
-                    } else if (divisionQuotientFinal == 0 && (divisionDenom != 0 && divisionNum != 0)){
+                    } else if (divisionQuotientFinal == 0 && (divisionDenom != 0 && divisionNum != 0)) {
                         System.out.println(divisionNum + "/" + Math.abs(divisionDenom));
                     } else if (divisionQuotientFinal == 0 && (divisionDenom == 0 || divisionNum == 0)) {
                         System.out.println("0");
@@ -182,20 +141,11 @@ public class FractionCalculator2 {
                         System.out.println(divisionQuotientFinal);
                     }
                 }
-            } else {
-                System.out.println("Error: invalid operator");
-            }
-        } else {
-            System.out.println("Error: invalid number(s)");
-        }
     }
-
     public static ArrayList readEquation() {
         //maybe use if statements in all methods to check if the inputs are mixed numbers (if argOneQuotient == 0, etc.). (if equation3[0] || equation4[0] == 0, etc)
         System.out.println("Input two mixed fractions with an underscore separating the quotient and fraction (Example: 3_1/2 * 3_1/2)");
-        System.out.println("If you are adding or multiplying a negative fraction and a positive fraction, input the negative fraction second (Example: 3_1/2 * -3_1/2");
-        System.out.println("If you input a regular fraction, input it with the quotient equalling 0 (Example: 3_1/2 + 0_1/2)");
-        System.out.println("If you are adding or multiplying a mixed number and a regular fraction, input the regular fraction last (Example: 3_1/2 + 0_1/2)");
+        System.out.println("If you are adding or multiplying a negative fraction and a positive fraction, input the negative fraction second (Example: 3_1/2 * -3_1/2)");
         Scanner operatorReader = new Scanner(System.in);
         String equation = operatorReader.nextLine();
         String[] equation2 = equation.split(" "); // 0: mixed number 1 1: operator 2: mixed number 2
@@ -204,14 +154,26 @@ public class FractionCalculator2 {
         String[] equation5 = equation3[1].split("/"); //0: numerator 1: denominator
         String[] equation6 = equation4[1].split("/"); //0: numerator 1: denominator
         ArrayList equation7 = new ArrayList();
+        var equation730 = equation3[0];
+        var equation750 = equation5[0];
+        var equation751 = equation5[1];
+        String equation721 = equation2[1];
+        var equation740 = equation4[0];
+        var equation760 = equation6[0];
+        var equation761 = equation6[1];
         //0:quotient of mixed number 1, 1:numerator of fraction 1, 2:denominator of fraction 1, 3:operator, 4:quotient of mixed number 2, 5:numerator of fraction 2, 6:denominator of fraction 2
-        equation7.add(equation3[0]);
-        equation7.add(equation5[0]);
-        equation7.add(equation5[1]);
-        equation7.add(equation2[1]);
-        equation7.add(equation4[0]);
-        equation7.add(equation6[0]);
-        equation7.add(equation6[1]);
+        if (!Float.isNaN(Integer.valueOf(equation730)) && !Float.isNaN(Integer.valueOf(equation750)) && !Float.isNaN(Integer.valueOf(equation751)) && (equation721.equals("+") || equation721.equals("-") || equation721.equals("*") || equation721.equals("/")) && !Float.isNaN(Integer.valueOf(equation740)) && !Float.isNaN(Integer.valueOf(equation760)) && !Float.isNaN(Integer.valueOf(equation761))) {
+            equation7.add(equation3[0]);
+            equation7.add(equation5[0]);
+            equation7.add(equation5[1]);
+            equation7.add(equation2[1]);
+            equation7.add(equation4[0]);
+            equation7.add(equation6[0]);
+            equation7.add(equation6[1]);
+        } else {
+            System.out.println("Error: Invalid operator/argument(s)");
+            System.exit(-1);
+        }
         return equation7;
     }
 
@@ -219,16 +181,19 @@ public class FractionCalculator2 {
     //if one is negative, then REDIRECT TO SUBTRACTION DO NOT MAKE A NEW METHOD
     public static String addition() {
         if (argOneQuotient > 0 && argTwoQuotient > 0) {
-            if (argOneQuotient > 0 && argTwoQuotient > 0) {
                 Float argOneMultNum = (argOneQuotient * argOneDenom + argOneNum) * argTwoDenom; //takes the quotient into account
                 Float argOneMultDenom = argOneDenom * argTwoDenom;
                 Float argTwoMultNum = (argTwoQuotient * argTwoDenom + argTwoNum) * argOneDenom;
                 String improperNumAddendStringed = String.valueOf((int) (argOneMultNum + argTwoMultNum));
                 String improperDenomAddendStringed = String.valueOf((int) (argOneMultDenom + 0));
                 return (improperNumAddendStringed + "/" + improperDenomAddendStringed);
-            }
         } else if (argOneQuotient < 0 && argTwoQuotient < 0) {
-            return(subtraction());
+            Float argOneMultNum = ((Math.abs(argOneQuotient) * argOneDenom + argOneNum) * argTwoDenom - (2*(Math.abs(argOneQuotient) * argOneDenom + argOneNum) * argTwoDenom)); //negative
+            Float argOneMultDenom = argOneDenom * argTwoDenom;
+            Float argTwoMultNum = Math.abs((Math.abs(argTwoQuotient) * argTwoDenom + argTwoNum) * argOneDenom); //positive
+            String numDiffStringed = String.valueOf((int) (argOneMultNum - argTwoMultNum));
+            String denomStringed = String.valueOf((int) (argOneMultDenom + 0));
+            return (Integer.parseInt(numDiffStringed) + "/" + denomStringed);
         } else if (argOneQuotient == 0 && argTwoQuotient > 0) {
             if (argOneNum < 0) {
                 return(subtraction());
@@ -270,7 +235,12 @@ public class FractionCalculator2 {
                     return (Integer.parseInt("-" + negImpNumStringed) + "/" + negImpDenomStringed);
                 }
         } else if (argOneQuotient > 0 && argTwoQuotient < 0) {
-            return (subtraction());
+            Float argOneMultNum = (argOneQuotient * argOneDenom + argOneNum) * argTwoDenom;
+            Float argOneMultDenom = argOneDenom * argTwoDenom;
+            Float argTwoMultNum = (Math.abs(argTwoQuotient) * argTwoDenom + argTwoNum) * argOneDenom;
+            String numDiffStringed = String.valueOf((int) (argOneMultNum - argTwoMultNum));
+            String denomStringed = String.valueOf((int) (argOneMultDenom + 0));
+            return (numDiffStringed + "/" + denomStringed);
         } else if (argOneQuotient == 0 && argTwoQuotient == 0) {
             Float negArgOneMultNum = argOneNum * argTwoDenom;
             Float negArgOneMultDenom = argOneDenom * argTwoDenom;
@@ -278,6 +248,13 @@ public class FractionCalculator2 {
             String negImpNumStringed = String.valueOf((int) (negArgOneMultNum + negArgTwoMultNum));
             String negImpDenomStringed = String.valueOf((int) (negArgOneMultDenom + 0));
             return (Integer.parseInt("-" + negImpNumStringed) + "/" + negImpDenomStringed);
+        } else if (argOneQuotient < 0 && argTwoQuotient > 0) {
+            Float argOneMultNum = ((Math.abs(argOneQuotient) * argOneDenom + argOneNum) * argTwoDenom) - (2*(Math.abs(argOneQuotient) * argOneDenom + argOneNum) * argTwoDenom);
+            Float argOneMultDenom = argOneDenom * argTwoDenom;
+            Float argTwoMultNum = (argTwoQuotient * argTwoDenom + argTwoNum) * argOneDenom;
+            String numDiffStringed = String.valueOf((int) (argOneMultNum + argTwoMultNum));
+            String denomStringed = String.valueOf((int) (argOneMultDenom + 0));
+            return (numDiffStringed + "/" + denomStringed);
         }
         return ("0");
     }
@@ -289,16 +266,20 @@ public class FractionCalculator2 {
             Float argTwoMultNum = (argTwoQuotient * argTwoDenom + argTwoNum) * argOneDenom;
             String numDiffStringed = String.valueOf((int) (argOneMultNum - argTwoMultNum));
             String denomStringed = String.valueOf((int) (argOneMultDenom + 0));
-            //System.out.println(numDiffStringed + "/" + denomStringed);
             return (numDiffStringed + "/" + denomStringed);
         } else if (argOneQuotient > 0 && argTwoQuotient < 0) {
-            return (addition());
+            Float argOneMultNum = (argOneQuotient * argOneDenom + argOneNum) * argTwoDenom;
+            Float argOneMultDenom  = argOneDenom * argTwoDenom;
+            Float argTwoMultNum = ((Math.abs(argTwoQuotient) * argTwoDenom + argTwoNum) * argOneDenom);
+            String numDiffStringed = String.valueOf((int) (argOneMultNum + argTwoMultNum));
+            String denomStringed = String.valueOf((int) (argOneMultDenom + 0));
+            System.out.println(numDiffStringed + "/" + denomStringed);
+            return (numDiffStringed + "/" + denomStringed);
         } else if (argOneQuotient < 0 && argTwoQuotient < 0) {
-            Float argOneMultNum = argOneNum * argTwoDenom;
+            Float argOneMultNum = ((Math.abs(argOneQuotient) * argOneDenom + argOneNum) * argTwoDenom) - (2*((Math.abs(argOneQuotient) * argOneDenom + argOneNum) * argTwoDenom));
             Float argOneMultDenom = argOneDenom * argTwoDenom;
-            Float argTwoMultNum = argTwoNum * argOneDenom;
-            //these are the correct fractions
-            String numDiffStringed = String.valueOf((int) (argOneMultNum - argTwoMultNum));
+            Float argTwoMultNum = (Math.abs(argTwoQuotient) * argTwoDenom + argTwoNum) * argOneDenom;
+            String numDiffStringed = String.valueOf((int) (argOneMultNum + argTwoMultNum));
             String denomStringed = String.valueOf((int) (argOneMultDenom + 0));
             return (numDiffStringed + "/" + denomStringed);
         } else if (argOneQuotient < 0 && argTwoQuotient > 0) {
