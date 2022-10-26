@@ -1,15 +1,23 @@
+import java.sql.SQLOutput;
 import java.util.Scanner;
 import java.util.ArrayList;
+//https://stackoverflow.com/questions/11776987/java-using-trycatch-outside-a-method
 public class FractionCalculator2 {
-    static ArrayList parsedMain = readEquation();
-    static Float argOneQuotient = Float.parseFloat((String) parsedMain.get(0));
-    static Float argOneNum = Float.parseFloat((String) parsedMain.get(1));
-    static Float argOneDenom = Float.parseFloat((String) parsedMain.get(2));
-    static String operator = (String) parsedMain.get(3);
-    static Float argTwoQuotient = Float.parseFloat((String) parsedMain.get(4));
-    static Float argTwoNum = Float.parseFloat((String) parsedMain.get(5));
-    static Float argTwoDenom = Float.parseFloat((String) parsedMain.get(6));
-
+    static {
+        try {
+            static ArrayList parsedMain = readEquation();
+            static Float argOneQuotient = Float.parseFloat((String) parsedMain.get(0));
+            static Float argOneNum = Float.parseFloat((String) parsedMain.get(1));
+            static Float argOneDenom = Float.parseFloat((String) parsedMain.get(2));
+            static String operator = (String) parsedMain.get(3);
+            static Float argTwoQuotient = Float.parseFloat((String) parsedMain.get(4));
+            static Float argTwoNum = Float.parseFloat((String) parsedMain.get(5));
+            static Float argTwoDenom = Float.parseFloat((String) parsedMain.get(6));
+        } catch (Exception e){
+            System.out.println("Error: Invalid operator/argument(s)");
+            System.exit(-1);
+        }
+    }
     public static void main(String[] args) {
         //make an entirely different math system for negative quotients
         //simplify THEN turn it into a mixed number
@@ -154,6 +162,7 @@ public class FractionCalculator2 {
         String[] equation5 = equation3[1].split("/"); //0: numerator 1: denominator
         String[] equation6 = equation4[1].split("/"); //0: numerator 1: denominator
         ArrayList equation7 = new ArrayList();
+        /*
         var equation730 = equation3[0];
         var equation750 = equation5[0];
         var equation751 = equation5[1];
@@ -161,19 +170,21 @@ public class FractionCalculator2 {
         var equation740 = equation4[0];
         var equation760 = equation6[0];
         var equation761 = equation6[1];
+         */
         //0:quotient of mixed number 1, 1:numerator of fraction 1, 2:denominator of fraction 1, 3:operator, 4:quotient of mixed number 2, 5:numerator of fraction 2, 6:denominator of fraction 2
-        if (!Float.isNaN(Integer.valueOf(equation730)) && !Float.isNaN(Integer.valueOf(equation750)) && !Float.isNaN(Integer.valueOf(equation751)) && (equation721.equals("+") || equation721.equals("-") || equation721.equals("*") || equation721.equals("/")) && !Float.isNaN(Integer.valueOf(equation740)) && !Float.isNaN(Integer.valueOf(equation760)) && !Float.isNaN(Integer.valueOf(equation761))) {
-            equation7.add(equation3[0]);
-            equation7.add(equation5[0]);
-            equation7.add(equation5[1]);
-            equation7.add(equation2[1]);
-            equation7.add(equation4[0]);
-            equation7.add(equation6[0]);
-            equation7.add(equation6[1]);
-        } else {
-            System.out.println("Error: Invalid operator/argument(s)");
-            System.exit(-1);
-        }
+       // if (!Float.isNaN(Integer.valueOf(equation730)) && !Float.isNaN(Integer.valueOf(equation750)) && !Float.isNaN(Integer.valueOf(equation751)) && (equation721.equals("+") || equation721.equals("-") || equation721.equals("*") || equation721.equals("/")) && !Float.isNaN(Integer.valueOf(equation740)) && !Float.isNaN(Integer.valueOf(equation760)) && !Float.isNaN(Integer.valueOf(equation761))) {
+            try {
+                equation7.add(equation3[0]);
+                equation7.add(equation5[0]);
+                equation7.add(equation5[1]);
+                equation7.add(equation2[1]);
+                equation7.add(equation4[0]);
+                equation7.add(equation6[0]);
+                equation7.add(equation6[1]);
+            } catch(Exception e) {
+                System.out.println("Error: Invalid operator/argument(s)");
+                System.exit(-1);
+            }
         return equation7;
     }
 
