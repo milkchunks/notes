@@ -1,141 +1,202 @@
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Collections;
 import java.util.regex.*;
-public class PemdasCalculator {
-    static boolean loop = true;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Collections;
+public class Calculator {
+    static boolean error = false;
     public static void main(String[] args) {
-        ArrayList<String> ops = new ArrayList<>();
-        ArrayList<String> ops2 = new ArrayList<>();
-        ArrayList<Double> digs = new ArrayList<>();
+        ArrayList<Double> digs = new ArrayList();
+        ArrayList<String> ops = new ArrayList();
+        boolean loop = true;
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Type any equation without variables, regardless of PEMDAS. Type 'exit' to exit");
-        String string = "foo";
-        Pattern p = Pattern.compile("[\\+|\\-|\\\\/|\\*|\\^|%]");
-        Pattern p2 = Pattern.compile("([1-9]|[1-9][0-9]|[1-9][0-9][0-9])");
+        String string;
+        Pattern p = Pattern.compile("\\d\\d?\\d?\\d?");
         Matcher m;
+        Pattern p2 = Pattern.compile("\\+|\\-|\\\\/|\\*|\\^|%");
         Matcher m2;
-        //TODO make it do negatives?
-        //TODO use the operator to separate digits, so whatevers next to/between operators gets sent to another array
+        double math;
+        System.out.println("Input any problem without a variable or type 'exit' to exit the calculator");
+        System.out.println("Your problem doesn't have to be in PEMDAS order");
         while (loop) {
-                if (!string.equalsIgnoreCase("exit")) {
-                    string = scanner.next();
-                    m = p.matcher(string);
-                    m2 = p2.matcher(string);
-                    ops.clear();
-                    digs.clear();
-                    while (m.find()) {
-                        ops.add(m.group());
-                    }
-                    while (m2.find()) {
-                        digs.add(Double.valueOf(m2.group()));
-                    }
-                    System.out.println(digs);
-                    System.out.println(doMath(ops, digs, ops2));
-                } else {
-                    System.out.println("Exiting...");
-                    loop = false;
-                    break;
+            string = scanner.next();
+            m = p.matcher(string);
+            m2 = p2.matcher(string);
+            if (!string.equalsIgnoreCase("exit")) {
+                while (m.find()) {
+                    digs.add(Double.valueOf(m.group()));
                 }
+                while (m2.find()) {
+                    ops.add(m2.group());
+                }
+                math = doMath(digs, ops);
+                if (!error) {
+                    System.out.println(math);
+                }
+                ops.clear();
+                digs.clear();
+            } else {
+                System.out.println("Exiting...");
+                break;
+            }
         }
     }
-    public static Double doMath(ArrayList<String> ops, ArrayList<Double> digs, ArrayList<String> ops2) {
-        int pos = 0;
-        for (int i=1; i<=ops.size();i++) {
-            if (ops.get(pos).equals("^")) {
-                ops2.add(ops.get(pos));
-                if (i!=1) {
-                    digs.add(0, digs.get(pos));
-                    digs.add(1, digs.get(pos + 1));
-                    digs.remove(pos + 2);
-                    digs.remove(pos + 2);
+    public static Double doMath(ArrayList<Double> digs, ArrayList<String> ops) {
+        try {
+            Double end = null;
+            int expoCount = Collections.frequency(ops, "^");
+            int multCount = Collections.frequency(ops, "*") + Collections.frequency(ops, "/") + Collections.frequency(ops, "%");
+            int addCount = Collections.frequency(ops, "+") + Collections.frequency(ops, "-");
+            Double tempEnd;
+            int pos = 0;
+            int temp = 0;
+            boolean removed = false;
+            do {
+                if (ops.size() != 0) {
+                    if (ops.get(pos).equals("^")) {
+                        if (pos > 0) {
+                            tempEnd = Math.pow(digs.get(pos), digs.get(pos + 1));
+                        } else {
+                            tempEnd = Math.pow(digs.get(0), digs.get(1));
+                        }
+                        digs.remove(pos);
+                        digs.remove(pos);
+                        ops.remove(pos);
+                        removed = true;
+                        if (pos > 0) {
+                            digs.add(pos, tempEnd);
+                        } else {
+                            digs.add(0, tempEnd);
+                        }
+                    }
+                    if (!removed) {
+                        pos++;
+                    }
+                    if (removed) {
+                        temp++;
+                    }
+                    removed = false;
                 }
-            }
-            if (pos < ops.size()-1) {
-                pos++;
-            }
-        }
-        pos = 0;
-        for (int i=1; i<=ops.size();i++) {
-            if (ops.get(pos).equals("*") || ops.get(pos).equals("%") || ops.get(pos).equals("/")) {
-                ops2.add(ops.get(pos));
-                if (i!=1) {
-                    //[3, 5, 8] pos = 1
-                    digs.add(0, digs.get(pos));
-                    digs.add(1, digs.get(pos+2));
-                    digs.remove(pos + 2);
-                    digs.remove(pos + 2);
+            } while (temp != expoCount);
+            pos = 0;
+            temp = 0;
+            removed = false;
+            do {
+                if (ops.size() != 0) {
+                    switch (ops.get(pos)) {
+                        case "*":
+                            if (pos > 0) {
+                                tempEnd = digs.get(pos) * digs.get(pos + 1);
+                            } else {
+                                tempEnd = digs.get(0) * digs.get(1);
+                            }
+                            digs.remove(pos);
+                            digs.remove(pos);
+                            ops.remove(pos);
+                            if (pos > 0) {
+                                digs.add(pos, tempEnd);
+                            } else {
+                                digs.add(0, tempEnd);
+                            }
+                            removed = true;
+                            break;
+                        case "/":
+                            if (pos > 0) {
+                                tempEnd = digs.get(pos) / digs.get(pos + 1);
+                            } else {
+                                tempEnd = digs.get(0) / digs.get(1);
+                            }
+                            digs.remove(pos);
+                            digs.remove(pos + 1);
+                            ops.remove(pos);
+                            if (pos > 0) {
+                                digs.add(pos, tempEnd);
+                            } else {
+                                digs.add(0, tempEnd);
+                            }
+                            removed = true;
+                            break;
+                        case "%":
+                            if (pos > 0) {
+                                tempEnd = digs.get(pos) % digs.get(pos + 1);
+                            } else {
+                                tempEnd = digs.get(0) % digs.get(1);
+                            }
+                            digs.remove(pos);
+                            digs.remove(pos);
+                            ops.remove(pos);
+                            if (pos > 0) {
+                                digs.add(pos, tempEnd);
+                            } else {
+                                digs.add(0, tempEnd);
+                            }
+                            removed = true;
+                            break;
+                        default:
+                            break;
+                    }
+                    if (!removed) {
+                        pos++;
+                    }
+                    if (removed) {
+                        temp++;
+                    }
+                    removed = false;
                 }
-            }
-            if (pos < ops.size()-1) {
-                pos++;
-            }
-        }
-        pos = 0;
-        for (int i=1; i<=ops.size();i++) {
-            if (ops.get(pos).equals("+") || ops.get(pos).equals("-")) {
-                ops2.add(ops.get(pos));
-                if (i!=1) {
-                    digs.add(0, digs.get(pos));
-                    digs.add(1, digs.get(pos + 1));
-                    digs.remove(pos + 2);
-                    digs.remove(pos + 2);
+            } while (temp != multCount);
+            pos = 0;
+            temp = 0;
+            removed = false;
+            do {
+                if (ops.size() != 0) {
+                    switch (ops.get(pos)) {
+                        case "+":
+                            if (pos > 0) {
+                                tempEnd = digs.get(pos) + digs.get(pos + 1);
+                            } else {
+                                tempEnd = digs.get(0) + digs.get(1);
+                            }
+                            digs.remove(pos);
+                            digs.remove(pos);
+                            ops.remove(pos);
+                            removed = true;
+                            if (pos > 0) {
+                                digs.add(pos, tempEnd);
+                            } else {
+                                digs.add(0, tempEnd);
+                            }
+                            break;
+                        case "-":
+                            if (pos > 0) {
+                                tempEnd = digs.get(pos) - digs.get(pos + 1);
+                            } else {
+                                tempEnd = digs.get(0) - digs.get(1);
+                            }
+                            digs.remove(pos);
+                            digs.remove(pos + 1);
+                            ops.remove(pos);
+                            removed = true;
+                            if (pos > 0) {
+                                digs.add(pos, tempEnd);
+                            } else {
+                                digs.add(0, tempEnd);
+                            }
+                            break;
+                    }
+                    if (!removed) {
+                        pos++;
+                    }
+                    if (removed) {
+                        temp++;
+                    }
+                    removed = false;
                 }
-            }
-            if (pos < ops.size()-1) {
-                pos++;
-            }
+            } while (temp != addCount);
+            end = digs.get(0);
+            return end;
+        } catch (Exception e) {
+            error = true;
+            System.out.println("Error: Invalid Problem (Try again)");
         }
-        System.out.println(ops2);
-        System.out.println(digs);
-        String operator;
-        Double end = null;
-        for (int i=-1; i<=ops2.size(); i++) {
-            if (ops2.size() > 0) {
-                operator = ops2.get(0);
-                switch (operator) {
-                    case "^":
-                        end = Math.pow(digs.get(0), digs.get(1));
-                        break;
-                    case "*":
-                        end = digs.get(0) * digs.get(1);
-                        break;
-                    case "/":
-                        end = digs.get(0) / digs.get(1);
-                        break;
-                    case "%":
-                        end = digs.get(0) % digs.get(1);
-                        break;
-                    case "+":
-                        end = digs.get(0) + digs.get(1);
-                        break;
-                    case "-":
-                        end = digs.get(0) - digs.get(1);
-                        break;
-                    default:
-                        end = 0.0;
-                        System.out.println("Error: Invalid Operator??");
-                        break;
-                }
-                System.out.println(ops2);
-                System.out.println(digs);
-                digs.remove(0);
-                digs.remove(0);
-                ops2.remove(0);
-                digs.add(0, end);
-            }
-        }
-        return end;
-    }
-    public static ArrayList<Integer> insertionSort(ArrayList<Integer> arr) {
-        int n = arr.size();
-        for (int i=1; i <= n-1; i++) {
-            int j = i;
-            while (j > 0 && arr.get(j-1) > arr.get(j)) {
-                Collections.swap(arr, j, j-1);
-                j--;
-            }
-        }
-        return arr;
+        return 0.0;
     }
 }
