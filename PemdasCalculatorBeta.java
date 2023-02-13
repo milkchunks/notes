@@ -15,6 +15,7 @@ public class PemdasCalculatorBeta {
         System.out.println("Your problem doesn't have to be in PEMDAS order");
         while (loop) {
             String string = scanner.next();
+            //TODO make this accept 0-9999 and remove newline character
             Pattern p = Pattern.compile("[0-9()+\\-*/.]");
             Matcher m = p.matcher(string);
             if (!string.equalsIgnoreCase("exit")) {
