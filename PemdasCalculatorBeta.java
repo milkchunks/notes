@@ -2,7 +2,7 @@ import java.util.regex.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
-public class PemdasCalculator {
+public class PemdasCalculatorBeta {
     //TODO its stuck in a dowhile in + for some reason (check other operator dowhiles too)
     static boolean error = false;
     public static void main(String[] args) {
@@ -43,6 +43,7 @@ public class PemdasCalculator {
             int temp = 0;
             boolean removed = false;
             do {
+                removed = false;
                 if (all.get(pos).equals("^")) {
                     tempEnd = String.valueOf(Math.pow(Double.valueOf(all.get(pos-1)), Double.valueOf(all.get(pos+1))));
                     all.remove(pos-1);
@@ -60,8 +61,8 @@ public class PemdasCalculator {
             } while (temp != expoCount);
             pos = 0;
             temp = 0;
-            removed = false;
             do {
+                removed = false;
                 if (all.get(pos).equals("/") || all.get(pos).equals("%") || all.get(pos).equals("*")) {
                 switch (all.get(pos)) {
                     case "*":
@@ -81,6 +82,7 @@ public class PemdasCalculator {
                 all.remove(pos);
                 all.remove(pos+1);
                 all.add(pos-1, tempEnd);
+                removed = true;
                 }
                 if (!removed) {
                     pos++;
@@ -91,8 +93,8 @@ public class PemdasCalculator {
             } while (temp != multCount);
             pos = 0;
             temp = 0;
-            removed = false;
             do {
+                removed = false;
                 if (all.get(pos).equals("-") || all.get(pos).equals("+")) {
                     switch (all.get(pos)) {
                         case "+":
@@ -107,6 +109,7 @@ public class PemdasCalculator {
                     all.remove(pos);
                     all.remove(pos+1);
                     all.add(pos-1, tempEnd);
+                    removed = true;
                 }
             } while (temp != addCount);
             end = all.get(0);
