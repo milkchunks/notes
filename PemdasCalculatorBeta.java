@@ -14,7 +14,7 @@ public class PemdasCalculatorBeta {
         while (loop) {
             String string = scanner.next();
             //this statement is weird but wtv
-            Pattern p = Pattern.compile("(\\d\\d?)|\\(|\\)|\\+|\\-|\\*|/|");
+            Pattern p = Pattern.compile("(\\d\\d?)|\\(|\\)|\\+|\\-|\\*|/|\\^|%");
             Matcher m = p.matcher(string);
             if (!string.equalsIgnoreCase("exit")) {
                 while (m.find()) {
