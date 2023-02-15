@@ -2,7 +2,7 @@ import java.util.regex.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
-public class PemdasCalculatorBeta {
+public class PemdasCalculator {
     //TODO add parentheses compatibility
     static boolean error = false;
     public static void main(String[] args) {
@@ -43,6 +43,7 @@ public class PemdasCalculatorBeta {
             int temp = 0;
             boolean removed = false;
             int parPos = all.indexOf("(");
+            if (parCount != 0) {
             do {
                 removed = false;
                 if (all.size() == 1) {
@@ -118,6 +119,7 @@ public class PemdasCalculatorBeta {
                                     }
                                     break;
                             }
+                            //TODO problems here
                         } while (!all.get(parPos + 2).equals(")"));
                 }
                 if (!removed) {
@@ -127,6 +129,7 @@ public class PemdasCalculatorBeta {
             } while (temp < parCount);
             all.remove(parPos);
             all.remove(parPos + 1);
+            }
             removed = false;
             pos = 0;
             temp = 0;
