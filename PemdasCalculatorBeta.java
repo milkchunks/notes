@@ -14,14 +14,13 @@ public class PemdasCalculatorBeta {
         while (loop) {
             String string = scanner.next();
             //this statement is weird but wtv
-            Pattern p = Pattern.compile("(\\d\\d?)|\\(|\\)|\\+|\\-|\\*|/|\\^|%");
+            //TODO it cant pick up ) and idk why
+            Pattern p = Pattern.compile("(\\d\\d?\\d?\\d?)|\\(|\\)|\\+|\\-|\\*|/|\\^|%");
             Matcher m = p.matcher(string);
             if (!string.equalsIgnoreCase("exit")) {
                 while (m.find()) {
                     all.add(m.group());
                 }
-                int pop = all.size()-1;
-                all.remove(pop);
                 if (!error) {
                     System.out.println(doMath(sorter(all)));
                 }
@@ -61,6 +60,7 @@ public class PemdasCalculatorBeta {
                                     all.add(pos - 1, tempEnd);
                                     temp++;
                                     removed = true;
+                                    expoCount = expoCount - 1;
                                     break;
                                 case "*":
                                     tempEnd = String.valueOf(Double.valueOf(all.get(pos - 1)) * Double.valueOf(all.get(pos + 1)));
@@ -70,6 +70,7 @@ public class PemdasCalculatorBeta {
                                     all.add(pos - 1, tempEnd);
                                     temp++;
                                     removed = true;
+                                    multCount = multCount - 1;
                                     break;
                                 case "%":
                                     tempEnd = String.valueOf(Double.valueOf(all.get(pos - 1)) % Double.valueOf(all.get(pos + 1)));
@@ -79,6 +80,7 @@ public class PemdasCalculatorBeta {
                                     all.add(pos - 1, tempEnd);
                                     temp++;
                                     removed = true;
+                                    multCount = multCount - 1;
                                     break;
                                 case "/":
                                     tempEnd = String.valueOf(Double.valueOf(all.get(pos - 1)) / Double.valueOf(all.get(pos + 1)));
@@ -88,6 +90,7 @@ public class PemdasCalculatorBeta {
                                     all.add(pos - 1, tempEnd);
                                     temp++;
                                     removed = true;
+                                    multCount = multCount - 1;
                                     break;
                                 case "+":
                                     tempEnd = String.valueOf(Double.valueOf(all.get(pos - 1)) + Double.valueOf(all.get(pos + 1)));
@@ -97,6 +100,7 @@ public class PemdasCalculatorBeta {
                                     all.add(pos - 1, tempEnd);
                                     temp++;
                                     removed = true;
+                                    addCount = addCount - 1;
                                     break;
                                 case "-":
                                     tempEnd = String.valueOf(Double.valueOf(all.get(pos - 1)) - Double.valueOf(all.get(pos + 1)));
@@ -106,6 +110,7 @@ public class PemdasCalculatorBeta {
                                     all.add(pos - 1, tempEnd);
                                     temp++;
                                     removed = true;
+                                    addCount = addCount - 1;
                                     break;
                                 default:
                                     if (!removed) {
@@ -113,7 +118,6 @@ public class PemdasCalculatorBeta {
                                     }
                                     break;
                             }
-
                         } while (!all.get(parPos + 2).equals(")"));
                 }
                 if (!removed) {
