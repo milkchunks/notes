@@ -3,7 +3,6 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
 public class PemdasCalculator {
-    //TODO add parentheses compatibility
     static boolean error = false;
     public static void main(String[] args) {
         ArrayList<String> all = new ArrayList();
@@ -14,7 +13,6 @@ public class PemdasCalculator {
         while (loop) {
             String string = scanner.next();
             //this statement is weird but wtv
-            //TODO it cant pick up ) and idk why
             Pattern p = Pattern.compile("(\\d\\d?\\d?\\d?)|\\(|\\)|\\+|\\-|\\*|/|\\^|%");
             Matcher m = p.matcher(string);
             if (!string.equalsIgnoreCase("exit")) {
@@ -34,7 +32,7 @@ public class PemdasCalculator {
     public static String doMath(ArrayList<String> all) {
         try {
             String end = null;
-            int parCount = Collections.frequency(all, "("); //if ( exists then ) exists, so i dont need to count that as separate
+            int parCount = Collections.frequency(all, "(");
             int expoCount = Collections.frequency(all, "^");
             int multCount = Collections.frequency(all, "*") + Collections.frequency(all, "/") + Collections.frequency(all, "%");
             int addCount = Collections.frequency(all, "+") + Collections.frequency(all, "-");
@@ -51,7 +49,6 @@ public class PemdasCalculator {
                 }
                 if (!all.get(parPos+2).equals(")") && pos > parPos) {
                         do {
-                            //TODO broken with 2+(2^3) (index 7 out of bounds for length 7), theres probably a problem with increasing pos when i removed something
                             switch (all.get(pos)) {
                                 case "^":
                                     tempEnd = String.valueOf(Math.pow(Double.valueOf(all.get(pos - 1)), Double.valueOf(all.get(pos + 1))));
@@ -119,7 +116,6 @@ public class PemdasCalculator {
                                     }
                                     break;
                             }
-                            //TODO problems here
                         } while (!all.get(parPos + 2).equals(")"));
                 }
                 if (!removed) {
