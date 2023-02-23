@@ -9,11 +9,11 @@ public class Test implements ActionListener {
     public Test() {
     }
      */
-    //TODO make ce remove the last DIGIT (like this: [10, +, 66] -> [10, +, 6]
-    //TODO pressing 0 adds 01 for some reason
     //TODO add a cursor?
     //TODO try catch for when you try to ce with an empty arraylist
-    //TODO when = is pressed, call the pemdas calculator file? in the calc file ArrayList<String> all = Test.all;? and the string 'arg' is displayed?
+    static boolean answerShown = true;
+    static boolean enterPressed = false;
+    static boolean clearPressed = false;
     static String arg = "";
     static ArrayList<String> all = new ArrayList();
     static JButton one = configButton("1", 0, 100);
@@ -37,18 +37,36 @@ public class Test implements ActionListener {
     static JButton expo = configButton("^", 300, 250);
     static JButton mod = configButton("%", 200, 300);
     static JButton zero = configButton("0", 200, 250);
+    static JTextField text = new JTextField();
+    static JFrame frame = setUp();
     public static void main(String[] args) {
-        JFrame frame = setUp();
-        JTextField text = new JTextField();
         enter.setText("Enter");
         enter.setBounds(0, 350, 400, 50);
         frame.setVisible(true);
         text.setBounds(0, 0, 414, 100);
         boolean loop = true;
         //TODO change font size and height of calculator
-        while (loop) {
-            text.setText(arg);
-            frame.add(text);
+        //TODO this is a disaster
+                while (loop) {
+                    if (answerShown) {
+                        if (!enterPressed) {
+                            text.setText(arg);
+                            frame.add(text);
+                        } else {
+                            ArrayList<String> sorter = new ArrayList();
+                            if(!clearPressed) {
+                                sorter = Calculator.sorter(all);
+                                text.setText(Calculator.doMath(sorter));
+                            } else {
+                                text.setText(arg);
+                            }
+                            frame.add(text);
+                        }
+                    } else {
+                        text.setText("");
+                        all.clear();
+                        arg = "";
+                    }
         }
     }
     //theres def a better way to set up
@@ -59,7 +77,7 @@ public class Test implements ActionListener {
         frame.setLayout(null);
         frame.setResizable(false);
         frame.setSize(414, 437);
-        frame.setName("Calculator");
+        frame.setTitle("Calculator");
         frame.setIconImage(icon.getImage());
         frame.add(zero);
         frame.add(one);
@@ -135,115 +153,157 @@ public class Test implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton o = (JButton) e.getSource();
         String name = o.getName();
+        answerShown = false;
         switch (name) {
             case "zero":
                 all.add("0");
                 all = allFormatter(all);
                 arg = arg + "0";
+                answerShown = true;
+                break;
             case "one":
                 all.add("1");
                 all = allFormatter(all);
                 arg = arg + "1";
+                answerShown = true;
                 break;
             case "two":
                 all.add("2");
                 all = allFormatter(all);
                 arg = arg + "2";
+                answerShown = true;
                 break;
             case "three":
                 all.add("3");
                 all = allFormatter(all);
                 arg = arg + "3";
+                answerShown = true;
                 break;
             case "four":
                 all.add("4");
                 all = allFormatter(all);
                 arg = arg + "4";
+                answerShown = true;
                 break;
             case "five":
                 all.add("5");
                 all = allFormatter(all);
                 arg = arg + "5";
+                answerShown = true;
                 break;
             case "six":
                 all.add("6");
                 all = allFormatter(all);
                 arg = arg + "6";
+                answerShown = true;
                 break;
             case "seven":
                 all.add("7");
                 all = allFormatter(all);
                 arg = arg + "7";
+                answerShown = true;
                 break;
             case "eight":
                 all.add("8");
                 all = allFormatter(all);
                 arg = arg + "8";
+                answerShown = true;
                 break;
             case "nine":
                 all.add("9");
                 all = allFormatter(all);
                 arg = arg + "9";
+                answerShown = true;
                 break;
             case "add":
                 all.add("+");
                 arg = arg + "+";
+                answerShown = true;
                 break;
             case "sub":
                 all.add("-");
                 arg = arg + "-";
+                answerShown = true;
                 break;
             case "mult":
                 all.add("*");
                 arg = arg + "*";
+                answerShown = true;
                 break;
             case "div":
                 all.add("/");
                 arg = arg + "/";
+                answerShown = true;
                 break;
             case "parOne":
                 all.add("(");
                 arg = arg + "(";
+                answerShown = true;
                 break;
             case "parTwo":
                 all.add(")");
                 arg = arg + ")";
+                answerShown = true;
                 break;
             case "expo":
                 all.add("^");
                 arg = arg + "^";
+                answerShown = true;
                 break;
             case "mod":
                 all.add("%");
                 arg = arg + "%";
+                answerShown = true;
                 break;
-            case "c" :
+            case "c":
                 all.clear();
                 arg = "";
+                clearPressed = true;
+                answerShown = true;
                 break;
             case "ce":
-                System.out.println("array: " + all.get(all.size()-1).chars().map(Character::getNumericValue).boxed().collect(Collectors.toList()));
-                //this splits corrcetly
-                all.remove(all.size()-1);
-                if (arg.length() != 1) {
-                    if (arg.charAt(arg.length() - 2) == '-') {
-                        arg = removeLastChar(arg);
+                answerShown = true;
+                //TODO this is still a hot mess but it works (?)
+                //all.get(all.size() - 1).chars().map(Character::getNumericValue).boxed().collect(Collectors.toList());
+                ArrayList<Integer> lastIndex = (ArrayList<Integer>) all.get(all.size() - 1).chars().map(Character::getNumericValue).boxed().collect(Collectors.toList());
+                //TODO if arg.length() != 1, run the loop?
+                if(!all.get(all.size()-1).equals("-") && !all.get(all.size()-1).equals("+") && !all.get(all.size()-1).equals("*") && !all.get(all.size()-1).equals("/") && !all.get(all.size()-1).equals("^") && !all.get(all.size()-1).equals("%") && !all.get(all.size()-1).equals("(") && !all.get(all.size()-1).equals(")")) {
+                    if(all.size()!=1) {
+                        String string = "";
+                        for (int i = 0; i <= lastIndex.size() - 2; i++) {
+                            string = string + lastIndex.get(i);
+                        }
+                        all.remove(all.size()-1);
+                        all.add(string);
                         arg = removeLastChar(arg);
                     } else {
-                        arg = removeLastChar(arg);
+                        if (arg.length() != 1) {
+                            arg = removeLastChar(arg);
+                            String string = "";
+                            for (int i = 0; i <= lastIndex.size() - 2; i++) {
+                                string = string + lastIndex.get(i);
+                            }
+                            all.clear();
+                            all.add(string);
+                        } else {
+                            all.clear();
+                            arg = "";
+                        }
                     }
                 } else {
-                    arg = "";
-                    all.clear();
+                    //if the last index is a sign
+                    all.remove(all.size()-1);
+                    arg = removeLastChar(arg);
                 }
                 break;
             case "enter":
+                enterPressed = true;
+                answerShown = true;
+                System.out.println("answerShown: " + answerShown);
                 break;
             default:
                 arg = "How did this even happen";
         }
-        System.out.println(all);
-        System.out.println(arg);
     }
     public static String removeLastChar(String s) {
         return (s == null || s.length() == 0)
@@ -253,14 +313,11 @@ public class Test implements ActionListener {
     public static ArrayList<String> allFormatter(ArrayList<String> all) {
         for (int i=1;i<=all.size()-1;i++) {
             if(all.size() != 1) {
-                System.out.println("i: " + i);
-                System.out.println("all before: " + all);
-                if ((!all.get(i - 1).equals("-") && !all.get(i - 1).equals("*") && !all.get(i - 1).equals("/") && !all.get(i - 1).equals("+") && !all.get(i - 1).equals("^") && !all.get(i - 1).equals("%")) && (!all.get(i).equals("-") && !all.get(i).equals("*") && !all.get(i).equals("/") && !all.get(i).equals("+") && !all.get(i).equals("^") && !all.get(i).equals("%"))) {
+                if ((!all.get(i - 1).equals("-") && !all.get(i - 1).equals("*") && !all.get(i - 1).equals("/") && !all.get(i - 1).equals("+") && !all.get(i - 1).equals("^") && !all.get(i - 1).equals("%") && !all.get(i - 1).equals("(") && !all.get(i - 1).equals(")")) && (!all.get(i).equals("(") && !all.get(i).equals(")") && !all.get(i).equals("-") && !all.get(i).equals("*") && !all.get(i).equals("/") && !all.get(i).equals("+") && !all.get(i).equals("^") && !all.get(i).equals("%"))) {
                     all.add(all.get(i-1) + all.get(i));
                     all.remove(all.get(i));
                     all.remove(i - 1);
                 }
-                System.out.println("all after: " + all);
             }
         }
         return all;
