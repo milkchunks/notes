@@ -2,7 +2,7 @@ import java.util.regex.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
-public class PemdasCalculator {
+public class Calculator {
     static boolean error = false;
     public static void main(String[] args) {
         ArrayList<String> all = new ArrayList();
@@ -221,9 +221,8 @@ public class PemdasCalculator {
             return end;
         } catch (Exception e) {
             error = true;
-            System.out.println("Error: Invalid Problem (Try again)");
+            return "Error: Invalid Problem (Try again)";
         }
-        return null;
     }
     public static ArrayList sorter(ArrayList<String> arr) {
         //this method transforms [<any operator> ,-, x] (x being a number) into [<any operator>, -x]
@@ -231,6 +230,7 @@ public class PemdasCalculator {
         int neg = 0;
         int negFrequency = Collections.frequency(arr, "-");
         do {
+            //problems with pos for some reason
             if (arr.get(pos).equals("-")) {
                 try {
                     neg++;
