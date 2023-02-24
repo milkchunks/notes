@@ -3,19 +3,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-
-public class Test implements ActionListener {
-    /*
-    public Test() {
-    }
-     */
-    //TODO add a cursor?
-    //TODO try catch for when you try to ce with an empty arraylist
-    static boolean answerShown = true;
+import java.awt.Font;
+import java.awt.Color;
+public class GUI implements ActionListener {
     static boolean enterPressed = false;
-    static boolean clearPressed = false;
     static String arg = "";
-    static ArrayList<String> all = new ArrayList();
+    static ArrayList<String> all = new ArrayList<>();
     static JButton one = configButton("1", 0, 100);
     static JButton two = configButton("2", 100, 100);
     static JButton three = configButton("3", 200, 100);
@@ -38,47 +31,67 @@ public class Test implements ActionListener {
     static JButton mod = configButton("%", 200, 300);
     static JButton zero = configButton("0", 200, 250);
     static JTextField text = new JTextField();
-    static JFrame frame = setUp();
+    static JFrame calcFrame = setUpMain();
+    static JFrame infoFrame = setUpInfo();
+    static JButton back = configButton("Back", 0, 0);
+    static JButton info = configButton("info", 0, 0);
     public static void main(String[] args) {
+        //it kept saying that enter, info, and back were null so they're set up in main
         enter.setText("Enter");
         enter.setBounds(0, 350, 400, 50);
-        frame.setVisible(true);
+        info.setText("Info");
+        info.setBounds(0, 400, 400, 50);
+        info.setFont(new Font("Dialog", Font.PLAIN, 12));
+        info.addActionListener(new GUI());
+        info.setName("info");
+        calcFrame.add(info);
+        calcFrame.setVisible(true);
         text.setBounds(0, 0, 414, 100);
-        boolean loop = true;
-        //TODO change font size and height of calculator
-        //TODO this is a disaster
-                while (loop) {
-                    if (answerShown) {
-                        if (!enterPressed) {
-                            text.setText(arg);
-                            frame.add(text);
-                        } else {
-                            ArrayList<String> sorter = new ArrayList();
-                            if(!clearPressed) {
-                                sorter = Calculator.sorter(all);
-                                text.setText(Calculator.doMath(sorter));
-                            } else {
-                                text.setText(arg);
-                            }
-                            frame.add(text);
-                        }
-                    } else {
-                        text.setText("");
-                        all.clear();
-                        arg = "";
-                    }
-        }
+        text.setFont(new Font("Dialog", Font.PLAIN, 16));
+        back.setName("back");
+        back.addActionListener(new GUI());
+        back.setFont(new Font("Dialog", Font.PLAIN, 12));
+        back.setBounds(0,400,414,50);
+        infoFrame.add(back);
+        calcFrame.add(text);
+        /*
+        TODO try catch for when you try to ce with an empty arraylist
+        TODO add LAST button
+        TODO it gets mad when you start with a )
+         */
     }
     //theres def a better way to set up
-    public static JFrame setUp() {
+    public static JFrame setUpMain() {
         JFrame frame = new JFrame();
         ImageIcon icon = new ImageIcon("C:\\Users\\tahom\\Downloads\\R.png");
+        Font font = new Font("Dialog", Font.PLAIN, 12);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setIconImage(icon.getImage());
         frame.setLayout(null);
         frame.setResizable(false);
-        frame.setSize(414, 437);
+        frame.setSize(414, 487);
         frame.setTitle("Calculator");
-        frame.setIconImage(icon.getImage());
+        zero.setFont(font);
+        one.setFont(font);
+        two.setFont(font);
+        three.setFont(font);
+        four.setFont(font);
+        five.setFont(font);
+        six.setFont(font);
+        seven.setFont(font);
+        eight.setFont(font);
+        nine.setFont(font);
+        add.setFont(font);
+        sub.setFont(font);
+        mult.setFont(font);
+        div.setFont(font);
+        expo.setFont(font);
+        mod.setFont(font);
+        parOne.setFont(font);
+        parTwo.setFont(font);
+        c.setFont(font);
+        ce.setFont(font);
+        enter.setFont(font);
         frame.add(zero);
         frame.add(one);
         frame.add(two);
@@ -100,27 +113,28 @@ public class Test implements ActionListener {
         frame.add(c);
         frame.add(ce);
         frame.add(enter);
-        zero.addActionListener(new Test());
-        one.addActionListener(new Test());
-        two.addActionListener(new Test());
-        three.addActionListener(new Test());
-        four.addActionListener(new Test());
-        five.addActionListener(new Test());
-        six.addActionListener(new Test());
-        seven.addActionListener(new Test());
-        eight.addActionListener(new Test());
-        nine.addActionListener(new Test());
-        add.addActionListener(new Test());
-        sub.addActionListener(new Test());
-        mult.addActionListener(new Test());
-        div.addActionListener(new Test());
-        parOne.addActionListener(new Test());
-        parTwo.addActionListener(new Test());
-        expo.addActionListener(new Test());
-        mod.addActionListener(new Test());
-        c.addActionListener(new Test());
-        ce.addActionListener(new Test());
-        enter.addActionListener(new Test());
+        text.addActionListener(new GUI());
+        zero.addActionListener(new GUI());
+        one.addActionListener(new GUI());
+        two.addActionListener(new GUI());
+        three.addActionListener(new GUI());
+        four.addActionListener(new GUI());
+        five.addActionListener(new GUI());
+        six.addActionListener(new GUI());
+        seven.addActionListener(new GUI());
+        eight.addActionListener(new GUI());
+        nine.addActionListener(new GUI());
+        add.addActionListener(new GUI());
+        sub.addActionListener(new GUI());
+        mult.addActionListener(new GUI());
+        div.addActionListener(new GUI());
+        parOne.addActionListener(new GUI());
+        parTwo.addActionListener(new GUI());
+        expo.addActionListener(new GUI());
+        mod.addActionListener(new GUI());
+        c.addActionListener(new GUI());
+        ce.addActionListener(new GUI());
+        enter.addActionListener(new GUI());
         zero.setName("zero");
         one.setName("one");
         two.setName("two");
@@ -144,6 +158,61 @@ public class Test implements ActionListener {
         enter.setName("enter");
         return frame;
     }
+    public static JFrame setUpInfo() {
+        JFrame frame = new JFrame();
+        JTextField info = new JTextField();
+        JTextField info2 = new JTextField();
+        JTextField info3 = new JTextField();
+        JTextField info4 = new JTextField();
+        JTextField info5 = new JTextField();
+        JTextField info6 = new JTextField();
+        JTextField info7 = new JTextField();
+        ImageIcon icon = new ImageIcon("C:\\Users\\tahom\\Downloads\\R.png");
+        Font font = new Font("Dialog", Font.PLAIN, 12);
+        frame.setBackground(Color.WHITE);
+        frame.setTitle("Calculator");
+        frame.setLayout(null);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setIconImage(icon.getImage());
+        frame.setSize(414, 487);
+        info.setBounds(5, 0, 414, 30);
+        info.setEditable(false);
+        info.setText("Click and type in the answer box to edit/type your equation.");
+        info.setFont(font);
+        info2.setBounds(5, 30, 414, 30);
+        info2.setEditable(false);
+        info2.setText("Press Enter on your keyboard to save changes to your problem...");
+        info2.setFont(font);
+        info3.setFont(font);
+        info3.setBounds(5, 60, 414, 30);
+        info3.setEditable(false);
+        info3.setText("...when using the keyboard to edit your problem.");
+        info4.setBounds(5, 90, 414, 30);
+        info4.setText("This will not compute your problem, only save its text");
+        info4.setEditable(false);
+        info4.setFont(font);
+        info5.setEditable(false);
+        info5.setText("Pressing the calculator's Enter button will NOT save your changes...");
+        info5.setBounds(5, 120, 414, 30);
+        info5.setFont(font);
+        info6.setEditable(false);
+        info6.setText("...it will compute your problem.");
+        info6.setBounds(5, 150, 414, 30);
+        info6.setFont(font);
+        info7.setEditable(false);
+        info7.setText("Make sure to save your equation when editing/typing with a keyboard");
+        info7.setBounds(5, 180, 414, 30);
+        info7.setFont(font);
+        frame.add(info);
+        frame.add(info2);
+        frame.add(info3);
+        frame.add(info4);
+        frame.add(info5);
+        frame.add(info6);
+        frame.add(info7);
+        return frame;
+    }
     public static JButton configButton(String text, int x, int y) {
         JButton button = new JButton();
         button.setBounds(x, y, 100, 50);
@@ -151,159 +220,168 @@ public class Test implements ActionListener {
         return button;
     }
     public void actionPerformed(ActionEvent e) {
-        JButton o = (JButton) e.getSource();
-        String name = o.getName();
-        answerShown = false;
+        String name;
+        try {
+            JButton o = (JButton) e.getSource();
+            name = o.getName();
+        } catch (Exception a) {
+            name = "text";
+        }
+        if(!name.equals("enter")) {
+            if (enterPressed) {
+                all.clear();
+                arg = "";
+            }
+        }
         switch (name) {
+            case "back":
+                infoFrame.setVisible(false);
+                calcFrame.setVisible(true);
+                break;
+            case "info":
+                calcFrame.setVisible(false);
+                infoFrame.setVisible(true);
+                break;
+            case "text":
+                arg = text.getText();
+                break;
             case "zero":
-                all.add("0");
-                all = allFormatter(all);
                 arg = arg + "0";
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "one":
-                all.add("1");
-                all = allFormatter(all);
                 arg = arg + "1";
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "two":
-                all.add("2");
-                all = allFormatter(all);
                 arg = arg + "2";
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "three":
-                all.add("3");
-                all = allFormatter(all);
                 arg = arg + "3";
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "four":
-                all.add("4");
-                all = allFormatter(all);
                 arg = arg + "4";
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "five":
-                all.add("5");
-                all = allFormatter(all);
                 arg = arg + "5";
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "six":
-                all.add("6");
-                all = allFormatter(all);
                 arg = arg + "6";
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "seven":
-                all.add("7");
-                all = allFormatter(all);
                 arg = arg + "7";
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "eight":
-                all.add("8");
-                all = allFormatter(all);
                 arg = arg + "8";
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "nine":
-                all.add("9");
-                all = allFormatter(all);
                 arg = arg + "9";
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "add":
-                all.add("+");
                 arg = arg + "+";
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "sub":
-                all.add("-");
                 arg = arg + "-";
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "mult":
-                all.add("*");
                 arg = arg + "*";
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "div":
-                all.add("/");
                 arg = arg + "/";
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "parOne":
-                all.add("(");
                 arg = arg + "(";
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "parTwo":
-                all.add(")");
                 arg = arg + ")";
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "expo":
-                all.add("^");
                 arg = arg + "^";
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "mod":
-                all.add("%");
                 arg = arg + "%";
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "c":
                 all.clear();
                 arg = "";
-                clearPressed = true;
-                answerShown = true;
+                enterPressed = false;
                 break;
             case "ce":
-                answerShown = true;
-                //TODO this is still a hot mess but it works (?)
-                //all.get(all.size() - 1).chars().map(Character::getNumericValue).boxed().collect(Collectors.toList());
-                ArrayList<Integer> lastIndex = (ArrayList<Integer>) all.get(all.size() - 1).chars().map(Character::getNumericValue).boxed().collect(Collectors.toList());
-                //TODO if arg.length() != 1, run the loop?
-                if(!all.get(all.size()-1).equals("-") && !all.get(all.size()-1).equals("+") && !all.get(all.size()-1).equals("*") && !all.get(all.size()-1).equals("/") && !all.get(all.size()-1).equals("^") && !all.get(all.size()-1).equals("%") && !all.get(all.size()-1).equals("(") && !all.get(all.size()-1).equals(")")) {
-                    if(all.size()!=1) {
-                        String string = "";
-                        for (int i = 0; i <= lastIndex.size() - 2; i++) {
-                            string = string + lastIndex.get(i);
-                        }
-                        all.remove(all.size()-1);
-                        all.add(string);
-                        arg = removeLastChar(arg);
-                    } else {
-                        if (arg.length() != 1) {
-                            arg = removeLastChar(arg);
+                try {
+                    enterPressed = false;
+                    //TODO this is still a hot mess but it works (?)
+                    ArrayList<Integer> lastIndex = (ArrayList<Integer>) all.get(all.size() - 1).chars().map(Character::getNumericValue).boxed().collect(Collectors.toList());
+                    //TODO if arg.length() != 1, run the loop?
+                    if (!all.get(all.size() - 1).equals("-") && !all.get(all.size() - 1).equals("+") && !all.get(all.size() - 1).equals("*") && !all.get(all.size() - 1).equals("/") && !all.get(all.size() - 1).equals("^") && !all.get(all.size() - 1).equals("%") && !all.get(all.size() - 1).equals("(") && !all.get(all.size() - 1).equals(")")) {
+                        if (all.size() != 1) {
                             String string = "";
                             for (int i = 0; i <= lastIndex.size() - 2; i++) {
                                 string = string + lastIndex.get(i);
                             }
-                            all.clear();
+                            all.remove(all.size() - 1);
                             all.add(string);
+                            arg = removeLastChar(arg);
                         } else {
-                            all.clear();
-                            arg = "";
+                            if (arg.length() != 1) {
+                                arg = removeLastChar(arg);
+                                String string = "";
+                                for (int i = 0; i <= lastIndex.size() - 2; i++) {
+                                    string = string + lastIndex.get(i);
+                                }
+                                all.clear();
+                                all.add(string);
+                            } else {
+                                all.clear();
+                                arg = "";
+                            }
                         }
+                    } else {
+                        //if the last index is a sign
+                        all.remove(all.size() - 1);
+                        arg = removeLastChar(arg);
                     }
-                } else {
-                    //if the last index is a sign
-                    all.remove(all.size()-1);
-                    arg = removeLastChar(arg);
+                } catch (Exception a) {
+
                 }
                 break;
             case "enter":
                 enterPressed = true;
-                answerShown = true;
-                System.out.println("answerShown: " + answerShown);
+                ArrayList<String> sorter = Calculator.sorter(all);
+                if (!Calculator.doMath(sorter).equals("Error: Invalid Problem (Try Again)")) {
+                    text.setText(Calculator.doMath(sorter));
+                } else {
+                    text.setText("Error: Invalid Problem (Try Again)");
+                }
                 break;
             default:
                 arg = "How did this even happen";
         }
+        if (!enterPressed) {
+            text.setText(arg);
+        }
+        all.clear();
+        for (int i=0; i<=arg.length()-1;i++) {
+            char[] tempArg = arg.toCharArray();
+            all.add(String.valueOf(tempArg[i]));
+            all = allFormatter(all);
+        }
+        calcFrame.add(text);
     }
     public static String removeLastChar(String s) {
         return (s == null || s.length() == 0)
