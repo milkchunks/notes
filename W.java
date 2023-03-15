@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.Font;
 import java.util.ArrayList;
 
-public class Team {
+public class W {
     static int buttonIndex = 0;
     static JFrame frame = new JFrame();
     static JButton button2;
