@@ -92,6 +92,7 @@ public class W {
         frame.add(backspace);
     }
     public static void changeColor() {
+        //TODO identifying letters that word doesn't contain as word containing it
         int pos = 0;
         //TODO broken, doesn't match letters
         ArrayList<String> texts = new ArrayList<>();
