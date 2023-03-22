@@ -10,6 +10,7 @@ public class W {
     TODO disable enter when buttonIndex isn't editing the last yrow
     TODO make it repeatable
     TODO expand word bank
+    TODO make setUneditable(JButton) method?
     TODO fix
      */
     static int buttonIndex = 0;
