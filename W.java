@@ -5,12 +5,20 @@ import java.awt.Font;
 import java.util.ArrayList;
 
 public class W {
+    /*
+    TODO make backspace not delete entered words
+    TODO disable enter when buttonIndex isn't editing the last yrow
+    TODO make it repeatable
+    TODO expand word bank
+    TODO fix
+     */
     static int buttonIndex = 0;
     static JFrame frame = new JFrame();
     static JButton button2;
+    static String[] words = {"polly", "jolly", "molly", "mucly"};
+    static ArrayList<String> word = new ArrayList<>();
     static ActionListener listen = e -> {
         JButton button = (JButton) e.getSource();
-        System.out.println("buttonIndex: " + buttonIndex);
         if (!button.getName().equals("enter")) {
             button2 = (JButton) frame.getContentPane().getComponent(buttonIndex);
             if (!button.getName().equals("backspace")) {
@@ -22,9 +30,12 @@ public class W {
                     buttonIndex--;
                 }
             } else {
-                button2.setText("");
                 if (buttonIndex != 0) {
+                    button2 = (JButton) frame.getContentPane().getComponent(buttonIndex-1);
+                    button2.setText("");
                     buttonIndex--;
+                } else {
+                    button2.setText("");
                 }
             }
         } else {
@@ -46,10 +57,12 @@ public class W {
             }
             buttonIndex--;
         }
+        System.out.println("buttonIndex: " + buttonIndex);
     };
     public static void main(String[] args) {
         //TODO steal from html
         setUp();
+        chooseWord();
         frame.setVisible(true);
     }
     public static void setUp() {
@@ -91,16 +104,15 @@ public class W {
         backspace.setBounds(450, 550, 50, 50);
         frame.add(backspace);
     }
-    public static void changeColor() {
-        //TODO identifying letters that word doesn't contain as word containing it
-        int pos = 0;
-        //TODO broken, doesn't match letters
-        ArrayList<String> texts = new ArrayList<>();
-        ArrayList<String> word = new ArrayList<>();
-        String[] words = {"polly", "jolly", "molly", "mucly"};
+    public static void chooseWord() {
         for (int i=0;i<=4;i++) {
             word.add(String.valueOf(words[(int) Math.floor((Math.random() * 3) - 0)].charAt(i)));
         }
+    }
+    public static void changeColor() {
+        //TODO it chooses a new word every time you guess a word
+        int pos = 0;
+        ArrayList<String> texts = new ArrayList<>();
         for (int i=buttonIndex-6;i<=buttonIndex-2;i++) {
             JButton button = (JButton) frame.getContentPane().getComponent(i);
             texts.add(button.getText().toLowerCase());
@@ -111,9 +123,10 @@ public class W {
         //word is the correct answer
         for (int i=buttonIndex-6;i<=buttonIndex-2;i++) {
             JButton button = (JButton) frame.getContentPane().getComponent(i);
+            System.out.println("pos: " + pos + ", button.getText(): " + button.getText().toLowerCase() + ", letter at pos: " + word.get(pos));
             if (button.getText().toLowerCase().equals(word.get(pos))) {
                 button.setBackground(Color.GREEN);
-            } else if (texts.contains(word.get(pos))) {
+            } else if (word.contains(texts.get(pos))) {
                 button.setBackground(Color.YELLOW);
             } else {
                 button.setBackground(Color.GRAY);
