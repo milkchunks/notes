@@ -27,5 +27,18 @@ public class Sectioning {
         } else {
             return "irregular";
         }
+        /*
+        TODO found this in gitlab commits, it seems important
+        StringBuilder sb = new StringBuilder(verb);
+        sb.deleteCharAt(verb.length() - 1);
+        sb.deleteCharAt(verb.length() - 2);
+        verb = sb.toString();
+        //ACTUALLY RUN THIS IN MAIN, but if verb is a stem changer and ir, then return reg and irreg stem
+        //TODO create trulyIrreg String[] in References, then check HERE if the verb is truly irreg (like decir > dij)
+        if (Arrays.asList(References.irregs).contains(verb) && Arrays.asList(References.irVerbs).contains(verb)) {
+        }
+        return verb;
+
+         */
     }
 }
