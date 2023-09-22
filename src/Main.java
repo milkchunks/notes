@@ -1,3 +1,4 @@
+package src;
 public class Main {
     public static int subject = 0;
     public static void main(String[] args) {

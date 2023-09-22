@@ -1,3 +1,4 @@
+package src;
 public class References {
     public static final String[] masterList = {"gastar", "comprender", "ir", "repetir", "dormir"};
     public static final String[] arVerbs = {"gastar"};
